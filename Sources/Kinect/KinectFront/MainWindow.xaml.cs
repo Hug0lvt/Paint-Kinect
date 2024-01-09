@@ -1,6 +1,7 @@
 ﻿using Model.Kinect;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace KinectFront
             InitializeComponent();
             KinectManager kinectManager = new KinectManager();
             kinectManager.StartSensor();
+            this.DataContext = kinectManager;
+
             
         }
     }
