@@ -6,7 +6,28 @@
         xmlns:local="clr-namespace:Application"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Ellipse/>
+        <TextBlock Text="TEST" TextAlignment="Center" Margin="50"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Couleur" Grid.Column="0" Margin="50"/>
+            <Button Content="Profondeur" Grid.Column="1" Margin="50"/>
+            <Button Content="Infrarouge" Grid.Column="2" Margin="50"/>
+            <Button Content="Squelette" Grid.Column="3" Margin="50"/>
+            <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
+        </Grid>
+
+        <Image Name="StreamView"/>
+
+    </StackPanel>
+    
 </Window>
