@@ -7,8 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <Ellipse/>
-        <TextBlock Text="TEST" TextAlignment="Center" Margin="50"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Ellipse Fill="Green" Height="50" Width="50"/>
+            <TextBlock Text="TEST" TextAlignment="Center" Margin="50"/>
+        </StackPanel>
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
