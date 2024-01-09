@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Kinect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace KinectFront
         public MainWindow()
         {
             InitializeComponent();
+            KinectManager kinectManager = new KinectManager();
+            kinectManager.StartSensor();
+            
         }
     }
 }
