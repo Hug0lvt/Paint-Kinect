@@ -23,9 +23,8 @@ namespace KinectFront
     /// </summary>
     public partial class MainWindow : Window
     {
-        KinectManager kinectManager;
+        public KinectManager KinectManager { get;  private set; }
         FrameDescription colorFrameDescription;
-
 
         public ImageSource ImageSource
         {
@@ -41,14 +40,15 @@ namespace KinectFront
             InitializeComponent();
 
 
-            kinectManager = new KinectManager();
-            kinectManager.StartSensor();
+            KinectManager = new KinectManager();
+            KinectManager.StartSensor();
 
-            colorFrameDescription = kinectManager.KinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Bgra);
-            kinectManager.KinectSensor.ColorFrameSource.OpenReader().FrameArrived += Reader_ColorFrameArrived;
+            colorFrameDescription = KinectManager.KinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Bgra);
+            KinectManager.KinectSensor.ColorFrameSource.OpenReader().FrameArrived += Reader_ColorFrameArrived;
 
             bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
 
+            DataContext = this;
         }
 
 

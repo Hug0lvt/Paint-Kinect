@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Ellipse Fill="Green" Height="50" Width="50"/>
-            <TextBlock TextAlignment="Center" Margin="50" Text="{Binding StatusText}"/>
+            <Ellipse Fill="Green" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
+            <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectManager.StatusText}"/>
         </StackPanel>
 
         <Grid>
@@ -29,7 +29,7 @@
             <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
         </Grid>
 
-        <Image Name="StreamView" />
+        <Image Name="StreamView" Source="{Binding ImageSource}" />
 
     </StackPanel>
 </Window>
