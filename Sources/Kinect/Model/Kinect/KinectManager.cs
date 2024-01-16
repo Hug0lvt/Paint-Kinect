@@ -14,7 +14,19 @@ namespace Model.Kinect
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public KinectSensor KinectSensor { get; set; }
-        public bool Status { get; private set; } = false;
+        public bool Status 
+        {
+            get
+            {
+                return _status;
+            } 
+            private set
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _status = false;
         public string StatusText 
         {
             get

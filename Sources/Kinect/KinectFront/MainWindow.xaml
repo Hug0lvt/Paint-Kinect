@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:KinectFront"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:BrushColorConverter x:Key="BConverter"></local:BrushColorConverter>
+    </Window.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Ellipse Fill="Green" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
+            <Ellipse Fill="{Binding KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
             <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectManager.StatusText}"/>
         </StackPanel>
 
