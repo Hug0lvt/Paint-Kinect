@@ -11,8 +11,8 @@
     </Window.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Ellipse Fill="{Binding KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
-            <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectManager.StatusText}"/>
+            <Ellipse Fill="{Binding KinectStream.KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
+            <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectStream.KinectManager.StatusText}"/>
         </StackPanel>
 
         <Grid>
@@ -33,7 +33,7 @@
         </Grid>
 
         <Viewbox HorizontalAlignment="Center">
-            <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+            <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
         </Viewbox>
 
     </StackPanel>
