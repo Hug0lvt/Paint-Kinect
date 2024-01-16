@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace Model.Kinect
 {
-    internal class InfraRed : KinectStream
+    internal class InfraRedStream : KinectStream
     {
+        public InfraRedStream(KinectManager mgr)
+        {
+            Mgr = mgr;
+        }
+
+        public KinectManager Mgr { get; }
+
         public override void Start()
         {
             throw new NotImplementedException();

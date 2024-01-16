@@ -8,6 +8,13 @@ namespace Model.Kinect
 {
     internal class DepthStream : KinectStream
     {
+        public DepthStream(KinectManager mgr)
+        {
+            Mgr = mgr;
+        }
+
+        public KinectManager Mgr { get; }
+
         public override void Start()
         {
             throw new NotImplementedException();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Kinect
 {
-    abstract class KinectStream
+    public abstract class KinectStream
     {
         KinectSensor Sensor { get; set; }
         KinectManager KinectManager { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,17 @@ namespace Model.Kinect
 {
     internal class ColorStream : KinectStream
     {
+        public ColorStream(KinectManager mgr)
+        {
+            Mgr = mgr;
+        }
+
+        public KinectManager Mgr { get; }
+
         public override void Start()
         {
             throw new NotImplementedException();
+
         }
 
         public override void Stop()

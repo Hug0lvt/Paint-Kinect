@@ -8,6 +8,13 @@ namespace Model.Kinect
 {
     internal class BodyStream : KinectStream
     {
+        public BodyStream(KinectManager mgr)
+        {
+            Mgr = mgr;
+        }
+
+        public KinectManager Mgr { get; }
+
         public override void Start()
         {
             throw new NotImplementedException();
