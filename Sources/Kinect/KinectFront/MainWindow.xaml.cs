@@ -2,8 +2,10 @@
 using Model.Kinect;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,8 +23,9 @@ namespace KinectFront
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public KinectManager KinectManager { get;  private set; }
         FrameDescription colorFrameDescription;
 
@@ -30,7 +33,7 @@ namespace KinectFront
         {
             get
             {
-                return this.bitmap;
+                return bitmap;
             }
         }
         private WriteableBitmap bitmap;
@@ -51,46 +54,37 @@ namespace KinectFront
             DataContext = this;
         }
 
-
         private void Reader_ColorFrameArrived(object sender, ColorFrameArrivedEventArgs e)
         {
-
-
-            bool colorFrameProcessed = false;
-
-            // ColorFrame is IDisposable
             using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
             {
-                bitmap.Lock();
                 if (colorFrame != null)
                 {
                     FrameDescription colorFrameDescription = colorFrame.FrameDescription;
 
-                    // verify data and write the new color frame data to the Writeable bitmap
-                    if ((colorFrameDescription.Width == this.bitmap.PixelWidth) && (colorFrameDescription.Height == this.bitmap.PixelHeight))
+                    using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
                     {
-                        if (colorFrame.RawColorImageFormat == ColorImageFormat.Bgra)
+                        bitmap.Lock();
+
+                        if ((colorFrameDescription.Width == bitmap.PixelWidth) && (colorFrameDescription.Height == bitmap.PixelHeight))
                         {
                             colorFrame.CopyConvertedFrameDataToIntPtr(
                                 bitmap.BackBuffer,
                                 (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
                                 ColorImageFormat.Bgra);
-                        }
-                        /*else
-                        {
-                            colorFrame.CopyConvertedFrameDataToBuffer(this.bitmap.PixelBuffer, ColorImageFormat.Bgra);
-                        }*/
 
-                        colorFrameProcessed = true;
+                            bitmap.AddDirtyRect(new Int32Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+                        }
+
+                        this.bitmap.Unlock();
                     }
                 }
             }
+        }
 
-            // we got a frame, render
-            if (colorFrameProcessed)
-            {
-                bitmap.Unlock();
-            }
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

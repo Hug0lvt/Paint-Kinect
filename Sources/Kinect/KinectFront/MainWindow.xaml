@@ -29,7 +29,9 @@
             <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
         </Grid>
 
-        <Image Name="StreamView" Source="{Binding ImageSource}" />
+        <Viewbox HorizontalAlignment="Center">
+            <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+        </Viewbox>
 
     </StackPanel>
 </Window>

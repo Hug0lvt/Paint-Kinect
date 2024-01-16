@@ -1,18 +1,33 @@
 ﻿using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model.Kinect
 {
-    public class KinectManager
+    public class KinectManager : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public KinectSensor KinectSensor { get; set; }
         public bool Status { get; private set; } = false;
-        public string StatusText { get; private set; } = "Indisponible";
+        public string StatusText 
+        {
+            get
+            {
+                return _statusText;
+            } 
+            private set
+            {
+                _statusText = value;
+                OnPropertyChanged();
+            } 
+        }
+        private string _statusText = "Indisponible";
 
         public KinectManager()
         {
@@ -52,7 +67,10 @@ namespace Model.Kinect
             }
         }
 
-
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
 
     }
