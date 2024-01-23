@@ -22,11 +22,6 @@ namespace Model.Kinect
         }
         #endregion
 
-        #region Fields
-        protected FrameDescription _colorFrameDescription = null;
-        protected ColorFrameReader _colorFrameReader = null;
-        #endregion
-
         #region Property
         public KinectManager KinectManager 
         {

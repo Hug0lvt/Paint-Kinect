@@ -14,6 +14,11 @@ namespace Model.Kinect.Streams
     public class ColorStream : KinectStream
     {
 
+        #region Fields
+        protected FrameDescription _colorFrameDescription = null;
+        protected ColorFrameReader _colorFrameReader = null;
+        #endregion
+
         public ColorStream(KinectManager mgr)
         {
             KinectManager = mgr;   

@@ -31,9 +31,23 @@ namespace KinectFront
         public MainWindow()
         {
             InitializeComponent();
-            KinectStream = new ColorStream(new KinectManager());
+
+            //Color Stream
+            /*KinectStream = new ColorStream(new KinectManager());
+            KinectStream.Start();
+            DataContext = this;*/
+
+            //Depth Stream
+            /*KinectStream = new DepthStream(new KinectManager());
+            KinectStream.Start();
+            DataContext = this;*/
+
+            //InfraRed Stream
+            KinectStream = new InfraRedStream(new KinectManager());
             KinectStream.Start();
             DataContext = this;
+
+
         }
 
 

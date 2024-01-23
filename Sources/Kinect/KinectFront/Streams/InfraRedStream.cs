@@ -12,6 +12,8 @@ namespace Model.Kinect.Streams
 {
     public class InfraRedStream : KinectStream
     {
+        //On repassera pour les conventions de nomage :(
+
         #region Property
         private InfraredFrameReader infraredFrameReader = null;
         private FrameDescription infraredFrameDescription = null;
@@ -21,29 +23,28 @@ namespace Model.Kinect.Streams
         private const float InfraredOutputValueMaximum = 1.0f;
         private byte[] infraredPixels = null;
         private const int BytesPerPixel = 4;
-        public KinectManager Mgr { get; }
         #endregion
-        public InfraRedStream(KinectManager mgr)
+        public InfraRedStream(KinectManager mng)
         {
-            Mgr = mgr;
+            KinectManager = mng;
         }
 
         #region Start/Stop Methods
 
         public override void Start()
         {
-            Mgr.StartSensor();
-            infraredFrameDescription = Mgr.KinectSensor.InfraredFrameSource.FrameDescription;
-            infraredFrameReader = Mgr.KinectSensor.InfraredFrameSource.OpenReader();
+            KinectManager.StartSensor();
+            infraredFrameDescription = KinectManager.KinectSensor.InfraredFrameSource.FrameDescription;
+            infraredFrameReader = KinectManager.KinectSensor.InfraredFrameSource.OpenReader();
             this.infraredFrameReader.FrameArrived += Reader_InfraredFrameArrived;
             _bitmap = new WriteableBitmap(infraredFrameDescription.Width, infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
-            Mgr.KinectSensor.Open();
+            KinectManager.KinectSensor.Open();
         }
 
         public override void Stop()
         {
-            _colorFrameReader.Dispose();
-            Mgr.StopSensor();
+            infraredFrameReader.Dispose();
+            KinectManager.StopSensor();
         }
         #endregion
 
