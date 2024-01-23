@@ -31,7 +31,7 @@ namespace Model.Kinect.Streams
             _depthFrameDescription = KinectManager.KinectSensor.DepthFrameSource.FrameDescription;
             _depthFrameReader = KinectManager.KinectSensor.DepthFrameSource.OpenReader();
             _depthFrameReader.FrameArrived += Reader_DepthFrameArrived;
-            _bitmap = new WriteableBitmap(_depthFrameDescription.Width, _depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
+            Bitmap = new WriteableBitmap(_depthFrameDescription.Width, _depthFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray8, null);
             _depthPixels = new byte[_depthFrameDescription.Width * _depthFrameDescription.Height];
         }
 

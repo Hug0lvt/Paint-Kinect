@@ -31,7 +31,7 @@ namespace Model.Kinect.Streams
             _colorFrameDescription = KinectManager.KinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Bgra);
             _colorFrameReader = KinectManager.KinectSensor.ColorFrameSource.OpenReader();
             _colorFrameReader.FrameArrived += Reader_ColorFrameArrived;
-            _bitmap = new WriteableBitmap(_colorFrameDescription.Width, _colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+            Bitmap = new WriteableBitmap(_colorFrameDescription.Width, _colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
 
         }
 

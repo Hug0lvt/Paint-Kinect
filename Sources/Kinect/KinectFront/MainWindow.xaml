@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KinectFront"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Closed="Window_Closed">
     <Window.Resources>
         <local:BrushColorConverter x:Key="BConverter"></local:BrushColorConverter>
     </Window.Resources>
@@ -25,9 +26,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Couleur" Grid.Column="0" Margin="50"/>
-            <Button Content="Profondeur" Grid.Column="1" Margin="50"/>
-            <Button Content="Infrarouge" Grid.Column="2" Margin="50"/>
+            <Button Content="Couleur" Grid.Column="0" Margin="50" Click="ColorStream_Click"/>
+            <Button Content="Profondeur" Grid.Column="1" Margin="50" Click="DepthStream_Click"/>
+            <Button Content="Infrarouge" Grid.Column="2" Margin="50" Click="InfraRedStream_Click"/>
             <Button Content="Squelette" Grid.Column="3" Margin="50"/>
             <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
         </Grid>

@@ -36,8 +36,17 @@ namespace Model.Kinect
             }
         }
         private KinectManager _kinectManager = null;
-        public ImageSource Bitmap { get => _bitmap; }
+        public ImageSource Bitmap 
+        { 
+            get => _bitmap;
+            set
+            {
+                _bitmap = (WriteableBitmap)value;
+                OnPropertyChanged();
+            }
+        }
         protected WriteableBitmap _bitmap = null;
+
         #endregion
 
         public abstract void Start();

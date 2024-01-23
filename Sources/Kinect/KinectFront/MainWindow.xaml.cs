@@ -24,33 +24,66 @@ namespace KinectFront
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public KinectStream KinectStream { get; set; }
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        #endregion
+
+        public KinectStream KinectStream 
+        {
+            get => _kinectStream; 
+            set
+            {
+                _kinectStream = value;
+                OnPropertyChanged();
+            }
+        }
+        private KinectStream _kinectStream;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //Color Stream
-            /*KinectStream = new ColorStream(new KinectManager());
-            KinectStream.Start();
-            DataContext = this;*/
-
-            //Depth Stream
-            /*KinectStream = new DepthStream(new KinectManager());
-            KinectStream.Start();
-            DataContext = this;*/
-
-            //InfraRed Stream
-            KinectStream = new InfraRedStream(new KinectManager());
-            KinectStream.Start();
             DataContext = this;
+
+            //Init default Stream
+            KinectStream = new ColorStream(new KinectManager());
+            KinectStream.Start();
+
+
+            //Body Stream
+            /*KinectStream = new BodyStream(new KinectManager());
+            KinectStream.Start();
+            DataContext = this;*/
 
 
         }
 
+        private void ColorStream_Click(object sender, RoutedEventArgs e)
+        {
+            KinectStream = new ColorStream(new KinectManager());
+            KinectStream.Start();
+        }
 
+        private void InfraRedStream_Click(object sender, RoutedEventArgs e)
+        {
+            KinectStream = new InfraRedStream(new KinectManager());
+            KinectStream.Start();
+        }
 
+        private void DepthStream_Click(object sender, RoutedEventArgs e)
+        {
+            KinectStream = new DepthStream(new KinectManager());
+            KinectStream.Start();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (KinectStream.KinectManager.Status) KinectStream.Stop();
+        }
     }
 }

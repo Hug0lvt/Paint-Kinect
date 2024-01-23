@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 
 namespace Model.Kinect.Streams
 {
@@ -35,22 +37,23 @@ namespace Model.Kinect.Streams
 
         public BodyStream(KinectManager mgr)
         {
-            Mgr = mgr;
+            KinectManager = mgr;
         }
 
-        public KinectManager Mgr { get; }
+
 
         #region Start and Stop
         public override void Start()
         {
-            Mgr.StartSensor();
-            coordinateMapper =  Mgr.KinectSensor.CoordinateMapper;
-            FrameDescription frameDescription =  Mgr.KinectSensor.DepthFrameSource.FrameDescription;
+            KinectManager.StartSensor();
+            coordinateMapper =  KinectManager.KinectSensor.CoordinateMapper;
+            FrameDescription frameDescription =  KinectManager.KinectSensor.DepthFrameSource.FrameDescription;
             addBones();
             displayWidth = frameDescription.Width;
             displayHeight = frameDescription.Height;
-            bodyFrameReader =  Mgr.KinectSensor.BodyFrameSource.OpenReader();
+            bodyFrameReader =  KinectManager.KinectSensor.BodyFrameSource.OpenReader();
             bodyFrameReader.FrameArrived +=  Reader_FrameArrived;
+            _bitmap = new WriteableBitmap(displayWidth, displayHeight, 96, 96, PixelFormats.Pbgra32, null);
             bodyColors = new List<Pen>();
             bodyColors.Add(new Pen(Brushes.Red, 6));
             bodyColors.Add(new Pen(Brushes.Orange, 6));
@@ -60,13 +63,13 @@ namespace Model.Kinect.Streams
             bodyColors.Add(new Pen(Brushes.Violet, 6));
             drawingGroup = new DrawingGroup();
             imageSource = new DrawingImage(this.drawingGroup);
-            Mgr.KinectSensor.Open();
+            KinectManager.KinectSensor.Open();
         }
 
         public override void Stop()
         {
-            _colorFrameReader.Dispose();
-            Mgr.StopSensor();
+            bodyFrameReader.Dispose();
+            KinectManager.StopSensor();
         }
         #endregion
 
@@ -123,6 +126,9 @@ namespace Model.Kinect.Streams
                     }
                      drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0,  displayWidth,  displayHeight));
                 }
+
+
+                
             }
         }
 

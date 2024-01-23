@@ -37,7 +37,7 @@ namespace Model.Kinect.Streams
             infraredFrameDescription = KinectManager.KinectSensor.InfraredFrameSource.FrameDescription;
             infraredFrameReader = KinectManager.KinectSensor.InfraredFrameSource.OpenReader();
             this.infraredFrameReader.FrameArrived += Reader_InfraredFrameArrived;
-            _bitmap = new WriteableBitmap(infraredFrameDescription.Width, infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
+            Bitmap = new WriteableBitmap(infraredFrameDescription.Width, infraredFrameDescription.Height, 96.0, 96.0, PixelFormats.Gray32Float, null);
             KinectManager.KinectSensor.Open();
         }
 
