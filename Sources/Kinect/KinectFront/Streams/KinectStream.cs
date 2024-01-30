@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Model.Kinect
 {
@@ -57,7 +58,7 @@ namespace Model.Kinect
                 OnPropertyChanged();
             }
         }
-        protected Canvas _canva = new Canvas();
+        protected Canvas _canva = null;
 
         #endregion
 

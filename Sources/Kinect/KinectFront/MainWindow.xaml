@@ -12,13 +12,14 @@
 
         <DataTemplate x:Key="bitmap">
             <Viewbox HorizontalAlignment="Center" >
-                <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
+                <Image Source="{Binding Bitmap}" />
             </Viewbox>
         </DataTemplate>
 
         <DataTemplate x:Key="canvas">
             <Viewbox HorizontalAlignment="Center" >
-                <ContentControl Content="{Binding KinectStream.Canva}"/>
+
+                <ContentControl Content="{Binding Canva}"/>
             </Viewbox>
         </DataTemplate>
 
@@ -26,8 +27,8 @@
             <Viewbox HorizontalAlignment="Center" >
                 <!-- Pour le Canva porentielement : Width="{Binding KinectStream.Width}" Height="{Binding KinectStream.Height}"-->
                 <Canvas Width="100" Height="100">
-                    <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
-                    <ContentControl Content="{Binding KinectStream.Canva}"/>
+                    <Image Source="{Binding Bitmap}" Stretch="UniformToFill" />
+                    <ContentControl Content="{Binding Canva}"/>
                 </Canvas>
             </Viewbox>
         </DataTemplate>
@@ -63,10 +64,10 @@
             <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
         </Grid>
 
-        <Viewbox HorizontalAlignment="Center" >
+        <!--<Viewbox HorizontalAlignment="Center" >
             <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
             
-        </Viewbox>
+        </Viewbox>-->
         <ContentControl Content="{Binding KinectStream}"
                         ContentTemplateSelector="{StaticResource SteamDTSelector}"/>
 

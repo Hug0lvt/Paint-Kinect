@@ -1,8 +1,12 @@
 ﻿using Microsoft.Kinect;
+using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Brushes = System.Windows.Media.Brushes;
+using Point = System.Windows.Point;
 
 namespace Model.Kinect.Streams
 {
@@ -11,6 +15,7 @@ namespace Model.Kinect.Streams
 
         #region Fields
         private BodyFrameReader _bodyFrameReader = null;
+        private FrameDescription _depthFrameDescription = null;
         #endregion
 
         public BodyStream(KinectManager mgr)
@@ -22,6 +27,7 @@ namespace Model.Kinect.Streams
         public override void Start()
         {
             KinectManager.StartSensor();
+            _depthFrameDescription = KinectManager.KinectSensor.DepthFrameSource.FrameDescription;
             _bodyFrameReader = KinectManager.KinectSensor.BodyFrameSource.OpenReader();
             _bodyFrameReader.FrameArrived += KinectSensor_BodyFrameArrived;
             Canva = new Canvas();
@@ -37,17 +43,16 @@ namespace Model.Kinect.Streams
 
         private void KinectSensor_BodyFrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            //Canva.Children.Clear();
-            Canva.Background = new SolidColorBrush(Colors.Green);
+            Canva.Width = _depthFrameDescription.Width;
+            Canva.Height = _depthFrameDescription.Height;
 
-            /*using (var bodyFrame = e.FrameReference.AcquireFrame())
+            using (var bodyFrame = e.FrameReference.AcquireFrame())
             {
                 if (bodyFrame != null)
                 {
                     Body[] bodies = new Body[bodyFrame.BodyCount];
                     bodyFrame.GetAndRefreshBodyData(bodies);
-                    Canva.Children.Clear();
-                    Canva.Background = new SolidColorBrush(Colors.Green);
+                    //Canva.Children.Clear();
 
                     foreach (Body body in bodies)
                     {
@@ -64,8 +69,8 @@ namespace Model.Kinect.Streams
                                     Height = 20,
                                     Fill = Brushes.Red
                                 };
-                                Canva.SetLeft(ellipse, point.X - ellipse.Width / 2);
-                                Canva.SetTop(ellipse, point.Y - ellipse.Height / 2);
+                                Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
+                                Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
 
                                 Canva.Children.Add(ellipse);
                             }
@@ -73,7 +78,7 @@ namespace Model.Kinect.Streams
                     }
 
                 }
-            }*/
+            }
         }
 
 
