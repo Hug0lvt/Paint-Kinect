@@ -9,10 +9,39 @@
         Closed="Window_Closed">
     <Window.Resources>
         <local:BrushColorConverter x:Key="BConverter"></local:BrushColorConverter>
+
+        <DataTemplate x:Key="bitmap">
+            <Viewbox HorizontalAlignment="Center" >
+                <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="canvas">
+            <Viewbox HorizontalAlignment="Center" >
+                <ContentControl Content="{Binding KinectStream.Canva}"/>
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="bitmapAndCanvas">
+            <Viewbox HorizontalAlignment="Center" >
+                <!-- Pour le Canva porentielement : Width="{Binding KinectStream.Width}" Height="{Binding KinectStream.Height}"-->
+                <Canvas Width="100" Height="100">
+                    <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
+                    <ContentControl Content="{Binding KinectStream.Canva}"/>
+                </Canvas>
+            </Viewbox>
+        </DataTemplate>
+
+        <local:StreamDataTemplateSelector x:Key="SteamDTSelector"
+                                          BitmapTemplate="{StaticResource bitmap}"
+                                          CanvasTemplate="{StaticResource canvas}"
+                                          BitmapAndCanvasTemplate="{StaticResource bitmapAndCanvas}"/>
+
+
     </Window.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Ellipse Fill="{Binding KinectStream.KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/><!-- Changer couleur avec le MVVM pour que ce soit propre (ou converter)-->
+            <Ellipse Fill="{Binding KinectStream.KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/>
             <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectStream.KinectManager.StatusText}"/>
         </StackPanel>
 
@@ -25,17 +54,21 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Content="Couleur" Grid.Column="0" Margin="50" Click="ColorStream_Click"/>
             <Button Content="Profondeur" Grid.Column="1" Margin="50" Click="DepthStream_Click"/>
             <Button Content="Infrarouge" Grid.Column="2" Margin="50" Click="InfraRedStream_Click"/>
-            <Button Content="Squelette" Grid.Column="3" Margin="50"/>
+            <Button Content="Squelette" Grid.Column="3" Margin="50" Click="BodyStream_Click"/>
             <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
         </Grid>
 
-        <Viewbox HorizontalAlignment="Center">
+        <Viewbox HorizontalAlignment="Center" >
             <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
+            
         </Viewbox>
+        <ContentControl Content="{Binding KinectStream}"
+                        ContentTemplateSelector="{StaticResource SteamDTSelector}"/>
 
     </StackPanel>
 </Window>

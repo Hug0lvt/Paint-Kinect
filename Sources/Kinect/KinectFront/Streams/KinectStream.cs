@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace Model.Kinect
 {
@@ -46,6 +47,17 @@ namespace Model.Kinect
             }
         }
         protected WriteableBitmap _bitmap = null;
+
+        public Canvas Canva
+        {
+            get => _canva;
+            set
+            {
+                _canva = value;
+                OnPropertyChanged();
+            }
+        }
+        protected Canvas _canva = new Canvas();
 
         #endregion
 

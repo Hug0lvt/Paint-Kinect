@@ -54,13 +54,6 @@ namespace KinectFront
             KinectStream = new ColorStream(new KinectManager());
             KinectStream.Start();
 
-
-            //Body Stream
-            /*KinectStream = new BodyStream(new KinectManager());
-            KinectStream.Start();
-            DataContext = this;*/
-
-
         }
 
         private void ColorStream_Click(object sender, RoutedEventArgs e)
@@ -81,9 +74,17 @@ namespace KinectFront
             KinectStream.Start();
         }
 
+        private void BodyStream_Click(object sender, RoutedEventArgs e)
+        {
+            KinectStream = new BodyStream(new KinectManager());
+            KinectStream.Start();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             if (KinectStream.KinectManager.Status) KinectStream.Stop();
         }
+
+        
     }
 }
