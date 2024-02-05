@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect;
+﻿using KinectFront.Streams;
+using Microsoft.Kinect;
 using Model.Kinect;
 using Model.Kinect.Streams;
 using System;
@@ -80,8 +81,16 @@ namespace KinectFront
             KinectStream.Start();
         }
 
+        private void BodyAndColorStream_Click(object sender, RoutedEventArgs e)
+        {
+            KinectStream = new BodyAndColorStream(new KinectManager());
+            KinectStream.Start();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
+            if (KinectStream == null) return;
+            if (KinectStream.KinectManager == null) return;
             if (KinectStream.KinectManager.Status) KinectStream.Stop();
         }
 

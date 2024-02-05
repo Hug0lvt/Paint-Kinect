@@ -60,6 +60,28 @@ namespace Model.Kinect
         }
         protected Canvas _canva = null;
 
+        public int Width 
+        { 
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged();
+            }
+        }
+        protected int _width = 450;
+
+        public int Height
+        {
+            get => _height;
+            set
+            {
+                _height = value;
+                OnPropertyChanged();
+            }
+        }
+        protected int _height = 800;
+
         #endregion
 
         public abstract void Start();

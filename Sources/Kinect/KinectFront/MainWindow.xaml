@@ -25,8 +25,7 @@
 
         <DataTemplate x:Key="bitmapAndCanvas">
             <Viewbox HorizontalAlignment="Center" >
-                <!-- Pour le Canva porentielement : Width="{Binding KinectStream.Width}" Height="{Binding KinectStream.Height}"-->
-                <Canvas Width="100" Height="100">
+                <Canvas Width="{Binding Width}" Height="{Binding Height}">
                     <Image Source="{Binding Bitmap}" Stretch="UniformToFill" />
                     <ContentControl Content="{Binding Canva}"/>
                 </Canvas>
@@ -61,7 +60,7 @@
             <Button Content="Profondeur" Grid.Column="1" Margin="50" Click="DepthStream_Click"/>
             <Button Content="Infrarouge" Grid.Column="2" Margin="50" Click="InfraRedStream_Click"/>
             <Button Content="Squelette" Grid.Column="3" Margin="50" Click="BodyStream_Click"/>
-            <Button Content="Squelette et couleur" Grid.Column="4" Margin="50"/>
+            <Button Content="Squelette et couleur" Grid.Column="4" Margin="50" Click="BodyAndColorStream_Click"/>
         </Grid>
 
         <!--<Viewbox HorizontalAlignment="Center" >
