@@ -84,19 +84,13 @@ namespace Model.Kinect.Streams
                     Height = 10
                 };
 
-                if (jointType == JointType.HandLeft && body.HandLeftState == HandState.Open)
-                {
-                    ellipse.Fill = Brushes.Black; // Main gauche open en noir
-                    ellipse.Width = 10;
-                    ellipse.Height = 10;
-                }
-                else if (jointType == JointType.HandRight && body.HandRightState == HandState.Open)
+                if (jointType == JointType.HandRight && body.HandRightState == HandState.Open)
                 {
                     ellipse.Fill = Brushes.Red; // Main droite open
                     ellipse.Width = 10;
                     ellipse.Height = 10;
                 }
-                else if(jointType == JointType.HandRight && body.HandRightState == HandState.Closed)
+                else if(jointType == JointType.HandLeft && body.HandLeftState == HandState.Closed)
                 {
                     ellipse.Fill = Brushes.White; // Main droite fermé
                     ellipse.Width = 20;
