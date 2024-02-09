@@ -9,8 +9,10 @@ using Brushes = System.Windows.Media.Brushes;
 
 namespace Model.Kinect.Streams
 {
-    public class HandStream : KinectStream
+    public class HandTrackedStream : KinectStream
     {
+        private Point leftHandPosition;
+        private Point rightHandPosition;
 
         #region Fields
         private BodyFrameReader _bodyFrameReader = null;
@@ -18,7 +20,7 @@ namespace Model.Kinect.Streams
         private CoordinateMapper _coordinateMapper = null;
         #endregion
 
-        public HandStream(KinectManager mgr)
+        public HandTrackedStream(KinectManager mgr)
         {
             KinectManager = mgr;
         }
@@ -48,7 +50,6 @@ namespace Model.Kinect.Streams
         {
             Canva.Width = _depthFrameDescription.Width;
             Canva.Height = _depthFrameDescription.Height;
-            Joint centerJoint;
 
             using (var bodyFrame = e.FrameReference.AcquireFrame())
             {
@@ -56,22 +57,27 @@ namespace Model.Kinect.Streams
                 {
                     Body[] bodies = new Body[bodyFrame.BodyCount];
                     bodyFrame.GetAndRefreshBodyData(bodies);
-                    //Canva.Children.Clear();
 
                     foreach (Body body in bodies)
                     {
                         if (body.IsTracked)
                         {
-                            // Afficher seulement les points des mains gauche et droite
-                            DrawHandJoint(body, JointType.HandLeft);
-                            DrawHandJoint(body, JointType.HandRight);
+                            UpdateHandPosition(body, JointType.HandLeft, ref leftHandPosition);
+                            UpdateHandPosition(body, JointType.HandRight, ref rightHandPosition);
                         }
                     }
+
+                    // Effacer le canevas
+                    Canva.Children.Clear();
+
+                    // Afficher les mains aux nouvelles positions
+                    DrawHandPosition(leftHandPosition, Brushes.Blue);
+                    DrawHandPosition(rightHandPosition, Brushes.Blue);
                 }
             }
         }
 
-        private void DrawHandJoint(Body body, JointType jointType)
+        private void UpdateHandPosition(Body body, JointType jointType, ref Point handPosition)
         {
             Joint joint = body.Joints[jointType];
             CameraSpacePoint position = joint.Position;
@@ -79,30 +85,23 @@ namespace Model.Kinect.Streams
 
             if (depthSpacePoint.X != float.NegativeInfinity && depthSpacePoint.Y != float.NegativeInfinity)
             {
-                Ellipse ellipse = new Ellipse
-                {
-                    Width = 10,
-                    Height = 10
-                };
-
-                if (jointType == JointType.HandRight && body.HandRightState == HandState.Open)
-                {
-                    ellipse.Fill = Brushes.Red; // Main droite open
-                    ellipse.Width = 10;
-                    ellipse.Height = 10;
-                }
-                else if(jointType == JointType.HandLeft && body.HandLeftState == HandState.Closed)
-                {
-                    ellipse.Fill = Brushes.White; // Main droite fermé
-                    ellipse.Width = 20;
-                    ellipse.Height = 20;
-                }
-
-                Canvas.SetLeft(ellipse, depthSpacePoint.X - ellipse.Width / 2);
-                Canvas.SetTop(ellipse, depthSpacePoint.Y - ellipse.Width / 2);
-
-                Canva.Children.Add(ellipse);
+                handPosition = new Point(depthSpacePoint.X, depthSpacePoint.Y);
             }
+        }
+
+        private void DrawHandPosition(Point handPosition, SolidColorBrush color)
+        {
+            Ellipse ellipse = new Ellipse
+            {
+                Width = 5,
+                Height = 5,
+                Fill = color
+            };
+
+            Canvas.SetLeft(ellipse, handPosition.X - ellipse.Width / 2);
+            Canvas.SetTop(ellipse, handPosition.Y - ellipse.Width / 2);
+
+            Canva.Children.Add(ellipse);
         }
     }
 }

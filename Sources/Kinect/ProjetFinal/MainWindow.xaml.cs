@@ -34,16 +34,27 @@ namespace ProjetFinal
         }
         #endregion
 
-        public KinectStream KinectStream 
+        public KinectStream KinectStreamPaint 
         {
-            get => _kinectStream; 
+            get => _kinectStreamPaint; 
             set
             {
-                _kinectStream = value;
+                _kinectStreamPaint = value;
                 OnPropertyChanged();
             }
         }
-        private KinectStream _kinectStream;
+        private KinectStream _kinectStreamPaint;
+
+        public KinectStream KinectStreamTrackedHand
+        {
+            get => _kinectStreamTrackedHand;
+            set
+            {
+                _kinectStreamTrackedHand = value;
+                OnPropertyChanged();
+            }
+        }
+        private KinectStream _kinectStreamTrackedHand;
 
         public MainWindow()
         {
@@ -51,16 +62,23 @@ namespace ProjetFinal
             DataContext = this;
 
             //Init default Stream
-            KinectStream = new HandStream(new KinectManager());
-            KinectStream.Start();
+            KinectStreamPaint = new HandStream(new KinectManager());
+            KinectStreamPaint.Start();
+
+            KinectStreamTrackedHand = new HandTrackedStream(new KinectManager());
+            KinectStreamTrackedHand.Start();
 
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (KinectStream == null) return;
-            if (KinectStream.KinectManager == null) return;
-            if (KinectStream.KinectManager.Status) KinectStream.Stop();
+            if (KinectStreamPaint == null) return;
+            if (KinectStreamPaint.KinectManager == null) return;
+            if (KinectStreamPaint.KinectManager.Status) KinectStreamPaint.Stop();
+
+            if (KinectStreamTrackedHand == null) return;
+            if (KinectStreamTrackedHand.KinectManager == null) return;
+            if (KinectStreamTrackedHand.KinectManager.Status) KinectStreamTrackedHand.Stop();
         }
 
         

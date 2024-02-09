@@ -9,7 +9,10 @@
         Closed="Window_Closed">
     <StackPanel>
         <Viewbox HorizontalAlignment="Center" >
-            <ContentControl Content="{Binding KinectStream.Canva}"/>
+            <Canvas Width="{Binding KinectStreamPaint.Width}" Height="{Binding KinectStreamPaint.Height}">
+                <ContentControl Content="{Binding KinectStreamPaint.Canva}"/>
+                <ContentControl Content="{Binding KinectStreamTrackedHand.Canva}"/>
+            </Canvas>
         </Viewbox>
 
     </StackPanel>

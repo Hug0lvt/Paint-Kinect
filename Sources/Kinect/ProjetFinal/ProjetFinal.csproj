@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Streams\HandStream.cs" />
     <Compile Include="Streams\BodyStream.cs" />
+    <Compile Include="Streams\HandTrackedStream.cs" />
     <Compile Include="Streams\KinectStream.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
