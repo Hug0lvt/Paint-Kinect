@@ -71,8 +71,8 @@ namespace Model.Kinect.Streams
                     Canva.Children.Clear();
 
                     // Afficher les mains aux nouvelles positions
-                    DrawHandPosition(leftHandPosition, Brushes.Blue);
-                    DrawHandPosition(rightHandPosition, Brushes.Blue);
+                    DrawHandPosition(leftHandPosition, Brushes.Black);
+                    DrawHandPosition(rightHandPosition, Brushes.Black);
                 }
             }
         }

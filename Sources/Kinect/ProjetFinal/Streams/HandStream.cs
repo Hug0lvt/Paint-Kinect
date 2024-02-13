@@ -1,6 +1,7 @@
 ﻿using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,6 +17,7 @@ namespace Model.Kinect.Streams
         private BodyFrameReader _bodyFrameReader = null;
         private FrameDescription _depthFrameDescription = null;
         private CoordinateMapper _coordinateMapper = null;
+        private SolidColorBrush _colorBrush = Brushes.Red;
         #endregion
 
         public HandStream(KinectManager mgr)
@@ -87,9 +89,21 @@ namespace Model.Kinect.Streams
 
                 if (jointType == JointType.HandRight && body.HandRightState == HandState.Open)
                 {
-                    ellipse.Fill = Brushes.Red; // Main droite open
+                    ellipse.Fill = _colorBrush; // Main droite open
                     ellipse.Width = 10;
                     ellipse.Height = 10;
+                }
+                else if (jointType == JointType.HandLeft && body.HandLeftState == HandState.Open)
+                {
+                    Joint handLeftJoint = body.Joints[JointType.HandLeft];
+                    float handLeftX = handLeftJoint.Position.X;
+                    float handLeftY = handLeftJoint.Position.Y;
+
+                    byte interpolatedR = (byte)(handLeftY * 255);
+                    byte interpolatedG = (byte)(handLeftX * 255);
+                    byte interpolatedB = (byte)((1 - handLeftX) * 255);
+
+                    _colorBrush = new SolidColorBrush(Color.FromRgb(interpolatedR, interpolatedG, interpolatedB));
                 }
                 else if(jointType == JointType.HandLeft && body.HandLeftState == HandState.Closed)
                 {
@@ -97,6 +111,7 @@ namespace Model.Kinect.Streams
                     ellipse.Width = 20;
                     ellipse.Height = 20;
                 }
+                
 
                 Canvas.SetLeft(ellipse, depthSpacePoint.X - ellipse.Width / 2);
                 Canvas.SetTop(ellipse, depthSpacePoint.Y - ellipse.Width / 2);
