@@ -21,6 +21,7 @@ Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce proje
 
 ## Auteurs
 [PINTRAND Aurélien](https://codefirst.iut.uca.fr/git/aurelien.pintrand)
+
 [LIVET Hugo](https://codefirst.iut.uca.fr/git/hugo.livet)
 
 ## Remerciments 
