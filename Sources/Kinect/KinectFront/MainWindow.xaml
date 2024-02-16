@@ -1,0 +1,74 @@
+﻿<Window x:Class="KinectFront.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KinectFront"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Closed="Window_Closed">
+    <Window.Resources>
+        <local:BrushColorConverter x:Key="BConverter"></local:BrushColorConverter>
+
+        <DataTemplate x:Key="bitmap">
+            <Viewbox HorizontalAlignment="Center" >
+                <Image Source="{Binding Bitmap}" />
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="canvas">
+            <Viewbox HorizontalAlignment="Center" >
+
+                <ContentControl Content="{Binding Canva}"/>
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="bitmapAndCanvas">
+            <Viewbox HorizontalAlignment="Center" >
+                <Canvas Width="{Binding Width}" Height="{Binding Height}">
+                    <Image Source="{Binding Bitmap}" Stretch="UniformToFill" />
+                    <ContentControl Content="{Binding Canva}"/>
+                </Canvas>
+            </Viewbox>
+        </DataTemplate>
+
+        <local:StreamDataTemplateSelector x:Key="SteamDTSelector"
+                                          BitmapTemplate="{StaticResource bitmap}"
+                                          CanvasTemplate="{StaticResource canvas}"
+                                          BitmapAndCanvasTemplate="{StaticResource bitmapAndCanvas}"/>
+
+
+    </Window.Resources>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Ellipse Fill="{Binding KinectStream.KinectManager.Status, Converter={StaticResource BConverter}}" Height="50" Width="50"/>
+            <TextBlock TextAlignment="Center" Margin="50" Text="{Binding KinectStream.KinectManager.StatusText}"/>
+        </StackPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Couleur" Grid.Column="0" Margin="50" Click="ColorStream_Click"/>
+            <Button Content="Profondeur" Grid.Column="1" Margin="50" Click="DepthStream_Click"/>
+            <Button Content="Infrarouge" Grid.Column="2" Margin="50" Click="InfraRedStream_Click"/>
+            <Button Content="Squelette" Grid.Column="3" Margin="50" Click="BodyStream_Click"/>
+            <Button Content="Squelette et couleur" Grid.Column="4" Margin="50" Click="BodyAndColorStream_Click"/>
+        </Grid>
+
+        <!--<Viewbox HorizontalAlignment="Center" >
+            <Image Source="{Binding KinectStream.Bitmap}" Stretch="UniformToFill" />
+            
+        </Viewbox>-->
+        <ContentControl Content="{Binding KinectStream}"
+                        ContentTemplateSelector="{StaticResource SteamDTSelector}"/>
+
+    </StackPanel>
+</Window>

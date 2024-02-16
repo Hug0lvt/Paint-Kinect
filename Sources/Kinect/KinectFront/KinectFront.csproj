@@ -7,11 +7,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <LangVersion>10.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-  <PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
+	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+	<PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
+</ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="..\Model\Model.csproj" />
 </ItemGroup>
 
 </Project>
