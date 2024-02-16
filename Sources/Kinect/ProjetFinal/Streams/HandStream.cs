@@ -1,4 +1,6 @@
-﻿using Microsoft.Kinect;
+﻿using KinectUtils.Events;
+using KinectUtils.Reconizer.Implementations.Postures;
+using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +22,12 @@ namespace Model.Kinect.Streams
         private SolidColorBrush _colorBrush = Brushes.Red;
         #endregion
 
+        #region Postures
+        PostureRightHandOpen _postureRightHandOpen = new PostureRightHandOpen();
+        PostureLeftHandOpen _postureLeftHandOpen = new PostureLeftHandOpen();
+        PostureLeftHandClosed _postureLeftHandClosed =new PostureLeftHandClosed();
+        #endregion
+
         public HandStream(KinectManager mgr)
         {
             KinectManager = mgr;
@@ -37,10 +45,20 @@ namespace Model.Kinect.Streams
             KinectManager.KinectSensor.Open();
             Width = _depthFrameDescription.Width;
             Height = _depthFrameDescription.Height;
+
+            //Events
+            _postureRightHandOpen.GestureRecognized += OnPostureRightHandOpenRecognized;
+            _postureLeftHandOpen.GestureRecognized += OnPostureLeftHandOpenRecognized;
+            _postureLeftHandClosed.GestureRecognized += OnPostureLeftHandClosedRecognized;
         }
 
         public override void Stop()
         {
+            //Events
+            _postureRightHandOpen.GestureRecognized -= OnPostureRightHandOpenRecognized;
+            _postureLeftHandOpen.GestureRecognized -= OnPostureLeftHandOpenRecognized;
+            _postureLeftHandClosed.GestureRecognized -= OnPostureLeftHandClosedRecognized;
+
             _bodyFrameReader.Dispose();
             KinectManager.StopSensor();
         }
@@ -59,41 +77,42 @@ namespace Model.Kinect.Streams
                     Body[] bodies = new Body[bodyFrame.BodyCount];
                     bodyFrame.GetAndRefreshBodyData(bodies);
                     //Canva.Children.Clear();
-
-                    foreach (Body body in bodies)
-                    {
-                        if (body.IsTracked)
-                        {
-                            // Afficher seulement les points des mains gauche et droite
-                            DrawHandJoint(body, JointType.HandLeft);
-                            DrawHandJoint(body, JointType.HandRight);
-                        }
-                    }
                 }
             }
         }
 
-        private void DrawHandJoint(Body body, JointType jointType)
+        private void OnPostureRightHandOpenRecognized(object sender, GestureRecognizedEventArgs e)
         {
-            Joint joint = body.Joints[jointType];
-            CameraSpacePoint position = joint.Position;
-            DepthSpacePoint depthSpacePoint = _coordinateMapper.MapCameraPointToDepthSpace(position);
-
-            if (depthSpacePoint.X != float.NegativeInfinity && depthSpacePoint.Y != float.NegativeInfinity)
+            if(sender is Body body && body.IsTracked)
             {
-                Ellipse ellipse = new Ellipse
+                Joint joint = body.Joints[JointType.HandLeft];
+                CameraSpacePoint position = joint.Position;
+                DepthSpacePoint depthSpacePoint = _coordinateMapper.MapCameraPointToDepthSpace(position);
+                if (depthSpacePoint.X != float.NegativeInfinity && depthSpacePoint.Y != float.NegativeInfinity)
                 {
-                    Width = 10,
-                    Height = 10
-                };
+                    Ellipse ellipse = new Ellipse
+                    {
+                        Width = 10,
+                        Height = 10
+                    };
+                    ellipse.Fill = _colorBrush;
 
-                if (jointType == JointType.HandRight && body.HandRightState == HandState.Open)
-                {
-                    ellipse.Fill = _colorBrush; // Main droite open
-                    ellipse.Width = 10;
-                    ellipse.Height = 10;
+                    Canvas.SetLeft(ellipse, depthSpacePoint.X - ellipse.Width / 2);
+                    Canvas.SetTop(ellipse, depthSpacePoint.Y - ellipse.Width / 2);
+
+                    Canva.Children.Add(ellipse);
                 }
-                else if (jointType == JointType.HandLeft && body.HandLeftState == HandState.Open)
+            }   
+        }
+
+        private void OnPostureLeftHandOpenRecognized(object sender, GestureRecognizedEventArgs e)
+        {
+            if (sender is Body body && body.IsTracked)
+            {
+                Joint joint = body.Joints[JointType.HandLeft];
+                CameraSpacePoint position = joint.Position;
+                DepthSpacePoint depthSpacePoint = _coordinateMapper.MapCameraPointToDepthSpace(position);
+                if (depthSpacePoint.X != float.NegativeInfinity && depthSpacePoint.Y != float.NegativeInfinity)
                 {
                     Joint handLeftJoint = body.Joints[JointType.HandLeft];
                     float handLeftX = handLeftJoint.Position.X;
@@ -105,19 +124,34 @@ namespace Model.Kinect.Streams
 
                     _colorBrush = new SolidColorBrush(Color.FromRgb(interpolatedR, interpolatedG, interpolatedB));
                 }
-                else if(jointType == JointType.HandLeft && body.HandLeftState == HandState.Closed)
-                {
-                    ellipse.Fill = Brushes.White; // Main droite fermé
-                    ellipse.Width = 20;
-                    ellipse.Height = 20;
-                }
-                
-
-                Canvas.SetLeft(ellipse, depthSpacePoint.X - ellipse.Width / 2);
-                Canvas.SetTop(ellipse, depthSpacePoint.Y - ellipse.Width / 2);
-
-                Canva.Children.Add(ellipse);
             }
         }
+
+        private void OnPostureLeftHandClosedRecognized(object sender, GestureRecognizedEventArgs e)
+        {
+            if (sender is Body body && body.IsTracked)
+            {
+                Joint joint = body.Joints[JointType.HandLeft];
+                CameraSpacePoint position = joint.Position;
+                DepthSpacePoint depthSpacePoint = _coordinateMapper.MapCameraPointToDepthSpace(position);
+                if (depthSpacePoint.X != float.NegativeInfinity && depthSpacePoint.Y != float.NegativeInfinity)
+                {
+
+                    
+                    Ellipse ellipse = new Ellipse
+                    {
+                        Width = 20,
+                        Height = 20
+                    };
+                    ellipse.Fill = Brushes.White;
+
+                    Canvas.SetLeft(ellipse, depthSpacePoint.X - ellipse.Width / 2);
+                    Canvas.SetTop(ellipse, depthSpacePoint.Y - ellipse.Width / 2);
+
+                    Canva.Children.Add(ellipse);
+                }
+            }
+        }
+
     }
 }

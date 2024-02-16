@@ -51,6 +51,9 @@
     <Compile Include="Reconizer\Implementations\Gestures\GestureSwipeLeftToRight.cs" />
     <Compile Include="Reconizer\Implementations\Postures\PostureHandsExtended.cs" />
     <Compile Include="Reconizer\Implementations\Postures\PostureHandsForward.cs" />
+    <Compile Include="Reconizer\Implementations\Postures\PostureLeftHandClosed.cs" />
+    <Compile Include="Reconizer\Implementations\Postures\PostureLeftHandOpen.cs" />
+    <Compile Include="Reconizer\Implementations\Postures\PostureRightHandOpen.cs" />
     <Compile Include="Reconizer\Implementations\Postures\PostureRightHandUp.cs" />
     <Compile Include="Reconizer\Implementations\Postures\PostureTwoHandsUp.cs" />
     <Compile Include="Reconizer\Posture.cs" />

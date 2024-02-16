@@ -103,6 +103,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KinectUtils\KinectUtils.csproj">
+      <Project>{7cc113ef-6b4b-4baa-8a0a-14e071b68bb3}</Project>
+      <Name>KinectUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{569e0df0-91fd-4b64-b25b-77366e40f134}</Project>
       <Name>Model</Name>
