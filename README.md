@@ -15,7 +15,8 @@ Connectez votre Kinect et assurez-vous que les pilotes sont correctement install
 ### Utilisation
 **TP1 :** Sur la branche ``dev/TP1`` ou sur master (Projet ``KinectFront`` en projet de démarrage).<br>
 **TP3 :** Sur la branche ``dev/TP3`` ou sur master (Projet ``ProjetFinal`` en projet de démarrage).<br><br>
-**Gestures et Postures (TP2) :** (Par manque de temps, nous avons implémanté les évenement pour reconnaitre des gestures ou des postures directement dans le projet final) Sur la branche ``dev/events`` -> Cette branche n'a pas pu être testée avec une Kinect...<br>
+**Gestures et Postures (TP2) :** (Par manque de temps, nous avons implémanté les évenement pour reconnaitre des gestures ou des postures directement dans le projet final) Sur la branche ``dev/events`` -> Cette branche n'a pas pu être testée avec une Kinect... si ça marche direct c'est cool :)<br>
+Voir : KinectUtils/Reconizer/usage.md (sur ``dev/events``)<br><br>
 **MVVM :** (Par manque de temps, nous avons implémanté l'architecture MVVM directement dans le TP1) Sur la branche ``dev/mvvm`` -> Cette branche n'a pas pu être testée avec une Kinect...<br>
 
 ## Auteurs
