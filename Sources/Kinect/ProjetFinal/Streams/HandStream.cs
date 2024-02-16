@@ -4,6 +4,7 @@ using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -76,6 +77,9 @@ namespace Model.Kinect.Streams
                 {
                     Body[] bodies = new Body[bodyFrame.BodyCount];
                     bodyFrame.GetAndRefreshBodyData(bodies);
+                    _postureRightHandOpen.TestGesture(bodies.FirstOrDefault());
+                    _postureLeftHandOpen.TestGesture(bodies.FirstOrDefault());
+                    _postureLeftHandClosed.TestGesture(bodies.FirstOrDefault());
                     //Canva.Children.Clear();
                 }
             }
