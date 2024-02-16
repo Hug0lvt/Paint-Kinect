@@ -19,6 +19,11 @@ Connectez votre Kinect et assurez-vous que les pilotes sont correctement install
 Voir : KinectUtils/Reconizer/usage.md (sur ``dev/events``)<br><br>
 **MVVM :** (Par manque de temps, nous avons implémanté l'architecture MVVM directement dans le TP1) Sur la branche ``dev/mvvm`` -> Cette branche n'a pas pu être testée avec une Kinect...<br>
 
+## Utilisation du projet final (Paint.Kinect)
+- Main droite ouverte : dessine
+- Main gauche ouverte : choix de la couleur en ce déplacent verticalement et horizontalement
+- Main gauche fermée : gomme
+
 ## Auteurs
 [PINTRAND Aurélien](https://codefirst.iut.uca.fr/git/aurelien.pintrand)
 
