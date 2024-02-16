@@ -1,4 +1,5 @@
 ﻿using KinectFront.Streams;
+using KinectFront.ViewModel;
 using Microsoft.Kinect;
 using Model.Kinect;
 using Model.Kinect.Streams;
@@ -25,73 +26,52 @@ namespace KinectFront
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-        #endregion
-
-        public KinectStream KinectStream 
-        {
-            get => _kinectStream; 
-            set
-            {
-                _kinectStream = value;
-                OnPropertyChanged();
-            }
-        }
-        private KinectStream _kinectStream;
+        private MainWindowViewModel _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
-
-            //Init default Stream
-            KinectStream = new ColorStream(new KinectManager());
-            KinectStream.Start();
-
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
         }
 
         private void ColorStream_Click(object sender, RoutedEventArgs e)
         {
-            KinectStream = new ColorStream(new KinectManager());
-            KinectStream.Start();
+            _viewModel.KinectStream = new ColorStream(new KinectManager());
+            _viewModel.KinectStream.Start();
         }
 
         private void InfraRedStream_Click(object sender, RoutedEventArgs e)
         {
-            KinectStream = new InfraRedStream(new KinectManager());
-            KinectStream.Start();
+            _viewModel.KinectStream = new InfraRedStream(new KinectManager());
+            _viewModel.KinectStream.Start();
         }
 
         private void DepthStream_Click(object sender, RoutedEventArgs e)
         {
-            KinectStream = new DepthStream(new KinectManager());
-            KinectStream.Start();
+            _viewModel.KinectStream = new DepthStream(new KinectManager());
+            _viewModel.KinectStream.Start();
         }
 
         private void BodyStream_Click(object sender, RoutedEventArgs e)
         {
-            KinectStream = new BodyStream(new KinectManager());
-            KinectStream.Start();
+            _viewModel.KinectStream = new BodyStream(new KinectManager());
+            _viewModel.KinectStream.Start();
         }
 
         private void BodyAndColorStream_Click(object sender, RoutedEventArgs e)
         {
-            KinectStream = new BodyAndColorStream(new KinectManager());
-            KinectStream.Start();
+            _viewModel.KinectStream = new BodyAndColorStream(new KinectManager());
+            _viewModel.KinectStream.Start();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (KinectStream == null) return;
-            if (KinectStream.KinectManager == null) return;
-            if (KinectStream.KinectManager.Status) KinectStream.Stop();
+            if (_viewModel.KinectStream == null) return;
+            if (_viewModel.KinectStream.KinectManager == null) return;
+            if (_viewModel.KinectStream.KinectManager.Status) _viewModel.KinectStream.Stop();
         }
 
         
